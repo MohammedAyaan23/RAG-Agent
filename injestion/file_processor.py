@@ -878,10 +878,12 @@ class EnhancedDynamicContentAwareChunker:
 
 
 # Usage Example
-if __name__ == "__main__":
+def process_file(path : str, metadata : str = None):
     print("Strating the chunking process")
     # Initialize chunker
-
+    file_name = path.split("/")[-1]
+    if metadata is None:
+        metadata = file_name
 
     chunker = EnhancedDynamicContentAwareChunker(
         chroma_path="./chroma_db",
@@ -891,15 +893,11 @@ if __name__ == "__main__":
     print("Chunker initialized successfully.")
     
     # Example document
+    file_path = path
     
-    with open("/Users/mohammedayaan/Desktop/Python_project/Project-Documentation/Concurrency, Parallelism, and Asynchronous Programming_ A Complete Guide.txt", "r") as f:
-        sample_text_2 = f.read()
     
-    with open("/Users/mohammedayaan/Desktop/Python_project/Project-Documentation/Real-Time message Backend Project.txt", "r") as f:
+    with open(file_path, "r") as f:
         sample_text_1 = f.read()
-
-    with open("/Users/mohammedayaan/Desktop/certification/targaryen-history.txt", "r") as f:
-        sample_text_3 = f.read()
 
     
 
@@ -911,9 +909,9 @@ if __name__ == "__main__":
     # Process document
     print("Processing document-1...")
     chunks = chunker.chunk_document(
-        document_id="sample_doc_001",
+        document_id=file_name,
         text=sample_text_1,
-        metadata={"I designed and built a Real-Time Messaging Backend System as a backend-only project, focusing on scalability, security, and real-time communication. The system is composed of multiple containerized microservices, each with a clearly defined responsibility, and is designed to support real-time messaging, secure authentication, intelligent message prioritization, and controlled traffic flow. The architecture reflects production-oriented backend design, with an emphasis on clean separation of concerns and extensibility."}
+        metadata={metadata}
     )
     print("Document-1 processed successfully.")
     
@@ -926,48 +924,6 @@ if __name__ == "__main__":
     metrics = chunker.get_metrics()
     print(f"\n📊 Metrics of document-1: {metrics}")
 
-    if sample_text_2:
-        print("Sample text-2 read successfully.")
-    else:
-        print("Failed to read sample text-2.")
     
-    # Process document
-    print("Processing document-2...")
-    chunks = chunker.chunk_document(
-        document_id="sample_doc_002",
-        text=sample_text_2,
-        metadata={"Concurrency is about dealing with multiple tasks by managing and interleaving their execution, often through context-switching on a single core, creating the illusion of simultaneous execution. Parallelism, in contrast, is truly executing multiple tasks at the exact same moment on multiple CPU cores. Synchronous programming executes code line-by-line where each operation blocks until complete, like cars in a single lane where one breakdown stops everyone. Asynchronous programming uses an event loop to handle non-blocking operations—when a task encounters an I/O wait (like a network request), it yields control to execute other tasks and resumes when the operation completes, making it highly efficient for I/O-bound work. A process is an independent program instance with isolated memory, while threads are lightweight execution units within a process that share memory, which enables efficient communication but creates race conditions that require synchronization mechanisms like mutexes. Single-threaded async uses one thread with an event loop to manage thousands of concurrent I/O operations efficiently, while multi-threaded synchronous runs multiple independent threads that can execute blocking operations in parallel, ideal for CPU-bound tasks on multi-core systems. The key is choosing the right approach: async for I/O-bound tasks with high concurrency, multi-threading or multi-processing for CPU-bound parallel computation, keeping in mind language-specific limitations like Python's GIL which prevents true parallelism in threads for CPU-bound work."}
-    )
-    print("Document-2 processed successfully.")
     
-    # Store in ChromaDB
-    print("Storing document-2 in ChromaDB...")
-    chunker.store_in_chromadb(chunks)
-    print("Document-2 stored in ChromaDB successfully.")
-    
-    # Get metrics
-    metrics = chunker.get_metrics()
-    print(f"\n📊 Metrics of document-2: {metrics}")
-
-    if sample_text_3:
-        print("Sample text-3 read successfully.")
-    else:
-        print("Failed to read sample text-3.")
-    
-    # Process document
-    print("Processing document-3...")
-    chunks = chunker.chunk_document(
-        document_id="sample_doc_003",
-        text=sample_text_3,
-        metadata={"I am a Targaryen, and I know history. My family's legacy is one of blood and fire, of dragons and conquest. I am House Targaryen, and I will not be denied my rightful place in the annals of history."}
-    )
-    print("Document-3 processed successfully.")
-    
-    # Store in ChromaDB
-    print("Storing document-3 in ChromaDB...")
-    chunker.store_in_chromadb(chunks)
-    print("Document-3 stored in ChromaDB successfully.")
-    
-    # Get metrics
-    metrics = chunker.get_metrics()
-    print(f"\n📊 Metrics of document-3: {metrics}")
+   
