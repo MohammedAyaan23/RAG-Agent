@@ -14,7 +14,7 @@ class VectorRetriever:
     def __init__(
         self,
         collection_name: str,
-        persist_path: str = "./injestion/chroma_db",
+        persist_path: str = "./chroma_db",
     ):
         self.client = chromadb.PersistentClient(
             path=persist_path,

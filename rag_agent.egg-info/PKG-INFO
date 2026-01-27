@@ -1,0 +1,9 @@
+Metadata-Version: 2.4
+Name: rag-agent
+Version: 0.1.0
+Summary: CLI-based RAG application with ingestion and interactive ask mode
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: typer>=0.9.0
+Requires-Dist: python-dotenv
+Requires-Dist: chromadb

@@ -12,8 +12,8 @@ from google.adk.apps.app import App, EventsCompactionConfig
 from dotenv import load_dotenv, find_dotenv
 
 # Import your planners
-from Planner.deterministic_planner import DeterministicPlanner
-from Planner.pseudo_deterministic_planner import PseudoDeterministicPlanner
+from planner.deterministic_planner import DeterministicPlanner
+from planner.pseudo_deterministic_planner import PseudoDeterministicPlanner
 
 load_dotenv(find_dotenv())
 

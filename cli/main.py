@@ -1,7 +1,7 @@
 import typer
 from injestion.file_processor import process_file
 from app.Query_Handler import handle_query
-
+import asyncio
 app = typer.Typer()
 
 @app.command()
@@ -20,6 +20,7 @@ def ingest(
     metadata: Metadata for the document
     """
     try:
+        print("Processing file...")
         process_file(path, metadata)
         typer.echo("File processed successfully!")
     except Exception as e:
@@ -29,27 +30,18 @@ def ingest(
 
 @app.command()
 def ask():
-    """Start the interactive CLI Seesion"""
-    typer.echo("Starting the interactive Query Mode..., type '\q' to exit")
+    asyncio.run(_ask_loop())
+
+async def _ask_loop():
+    typer.echo("Starting the interactive Query Mode..., type '\\q' to exit")
 
     while True:
         query = typer.prompt(">>")
-        if query.lower() == "\q":
-            typer.echo("Exiting Query mode,Goodbye!")
+        if query.lower() == "\\q":
             break
-        
-        try:
-            print("Processing query...")
-            response = handle_query(query)
-            answer = response.get("response", "")
-            typer.echo(f"\n{answer}\n")
-            
-            
-        except Exception as e:
-            typer.echo(f"An error occurred: {e}")
-        
-        
 
+        response = await handle_query(query)
+        typer.echo(response['response'])
 
 
 

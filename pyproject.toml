@@ -1,2 +1,34 @@
+[build-system]
+requires = ["setuptools>=65.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rag-agent"
+version = "0.1.0"
+description = "CLI-based RAG application with ingestion and interactive ask mode"
+readme = "README.md"
+requires-python = ">=3.10"
+
+dependencies = [
+    "typer>=0.9.0",
+    "python-dotenv",
+    "chromadb",
+]
+
 [project.scripts]
 rag = "cli.main:app"
+
+[tool.setuptools]
+# Explicitly tell setuptools which packages to install
+packages = [
+    "cli",
+    "app",
+    "RAG_agent",
+    "retriever",
+    "injestion",
+    "chroma_db",
+    "agents"
+]
+
+# Optional but recommended: avoid accidental inclusion
+include-package-data = false

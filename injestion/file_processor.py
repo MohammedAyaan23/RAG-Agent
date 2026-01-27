@@ -242,7 +242,7 @@ class EnhancedDynamicContentAwareChunker:
         
         return best_type, confidence
     
-    def _semantic_chunking(self, text: str, target_tokens: int = 120, 
+    def _semantic_chunking(self, text: str, target_tokens: int = 110, 
                           overlap: int = 30) -> List[Dict]:
         """
         Semantic chunking with sentence boundaries and overlap
